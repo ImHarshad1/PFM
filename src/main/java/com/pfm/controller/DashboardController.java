@@ -11,5 +11,13 @@ public class DashboardController {
 	public String dashboardPage() {
 		return "dashboard";
 	}
+	@GetMapping("/report")
+	public String ReportPage() {
+		return "report";
+	}
 	
+	@GetMapping("/category")
+	public String CategoryPage() {
+		return "category";
+	}
 }
