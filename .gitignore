@@ -1,9 +1,3 @@
-HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-
 ### STS ###
 .apt_generated
 .classpath
@@ -29,6 +23,60 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
+# ===============================
+# Sensitive Configuration Files
+# ===============================
+
+# Ignore application config with secrets
+application.properties
+application.yml
+src/main/resources/application.properties
+
+# Environment variables
+.env
+
+# ===============================
+# Build & Target Files
+# ===============================
+
+/target/
+/build/
+
+# ===============================
+# Logs
+# ===============================
+
+*.log
+
+# ===============================
+# IDE / OS Files
+# ===============================
+
+# Eclipse / STS
+.classpath
+.project
+.settings/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# VS Code
 .vscode/
+
+# Mac / Windows
 .DS_Store
+Thumbs.db
+
+# ===============================
+# Maven Wrapper
+# ===============================
+
+.mvn/wrapper/maven-wrapper.jar
+
+# ===============================
+# Test Reports
+# ===============================
+
+/surefire-reports/
+/failsafe-reports/
