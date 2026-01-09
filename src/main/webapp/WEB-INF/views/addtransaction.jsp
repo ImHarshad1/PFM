@@ -166,7 +166,9 @@
 <body>
 
 <jsp:include page="navbar.jsp" />
-
+<%
+           java.util.List<com.pfm.entity.Category> ctgs =(java.util.List<com.pfm.entity.Category>) request.getAttribute("categories");
+%>
 <!-- ===== Add Transaction ===== -->
 <div class="transaction-card">
     <h2>Add Transaction</h2>
@@ -186,32 +188,40 @@
 
         <div class="form-group">
             <label><i class="fa-solid fa-calendar-day"></i>Date</label>
-            <input type="date" name="transactionDate" required>
+            <input type="date" name="date" required>
         </div>
 
         <div class="form-group">
             <label><i class="fa-solid fa-tags"></i>Category</label>
-            <select name="categoryId" required>
+            <select name="catId" required>
                 <option value="">Select category</option>
-                <option value="1">Food</option>
-                <option value="2">Rent</option>
-                <option value="3">Shopping</option>
-                <option value="4">Movie</option>
-                <option value="5">Salary</option>
-                <option value="6">Travel</option>
-                <option value="7">EMI</option>
-                <option value="8">Mobile Recharge</option>
-                <option value="9">Bills</option>
-                <option value="10">Other Expense</option>
-                <option value="11">Other Income</option>
-            </select>
+                 <%
+                	if(!ctgs.isEmpty())
+                	{
+                		for(com.pfm.entity.Category cat : ctgs)
+                		{
+                %>
+                	<option value="<%=cat.getId()%>"><%=cat.getName()%></option>
+            
+            		<%
+                		} 
+                	%>
+                		</select>
+                <%
+                	}else{
+               	%>
+                    	<p style="color: red">Categories Not Found!!!!</p>
+               	<%
+               		}
+               	%>
         </div>
 
         <button class="save-btn">Save Transaction</button>
     </form>
 </div>
 
-<!-- ===== JS===== -->
+ <!-- ===== JS===== -->
+ <!--
 <script>
 document.querySelectorAll('.form-group select').forEach(select => {
 
@@ -251,7 +261,7 @@ document.querySelectorAll('.form-group select').forEach(select => {
         }
     });
 });
-</script>
+</script> -->
 
 </body>
 </html>

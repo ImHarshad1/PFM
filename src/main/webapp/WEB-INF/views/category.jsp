@@ -128,6 +128,10 @@
 
 <jsp:include page="navbar.jsp" />
 
+<%
+           java.util.List<com.pfm.entity.Category> ctgs =(java.util.List<com.pfm.entity.Category>) request.getAttribute("categories");
+%>
+
 <div class="page-container">
 
     <div class="page-title">All Categories</div>
@@ -141,54 +145,26 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Shopping</td>
-                    <td><span class="badge badge-expense">EXPENSE</span></td>
-                </tr>
-                <tr>
-                    <td>Movie</td>
-                    <td><span class="badge badge-expense">EXPENSE</span></td>
-                </tr>
-                <tr>
-                    <td>Salary</td>
-                    <td><span class="badge badge-income">INCOME</span></td>
-                </tr>
-                <tr>
-                    <td>Travel</td>
-                    <td><span class="badge badge-expense">EXPENSE</span></td>
-                </tr>
-                <tr>
-                    <td>EMI</td>
-                    <td><span class="badge badge-expense">EXPENSE</span></td>
-                </tr>
-                <tr>
-                    <td>Groceries</td>
-                    <td><span class="badge badge-expense">EXPENSE</span></td>
-                </tr>
-                <tr>
-                    <td>Mobile Recharge</td>
-                    <td><span class="badge badge-expense">EXPENSE</span></td>
-                </tr>
-                <tr>
-                    <td>Rent</td>
-                    <td><span class="badge badge-expense">EXPENSE</span></td>
-                </tr>
-                <tr>
-                    <td>Food</td>
-                    <td><span class="badge badge-expense">EXPENSE</span></td>
-                </tr>
-                <tr>
-                    <td>Bills</td>
-                    <td><span class="badge badge-expense">EXPENSE</span></td>
-                </tr>
-                <tr>
-                    <td>Other Expense</td>
-                    <td><span class="badge badge-expense">EXPENSE</span></td>
-                </tr>
-                <tr>
-                    <td>Other Income</td>
-                    <td><span class="badge badge-income">INCOME</span></td>
-                </tr>
+               <%
+                	if(!ctgs.isEmpty())
+                	{
+                		for(com.pfm.entity.Category cat : ctgs)
+                		{
+                %>
+                	<tr>
+                    	<td><%=cat.getName()%></td>
+                    	<td><span class="badge badge-expense"><%=cat.getType()%></span></td>
+               		</tr>
+               	<%
+                		}
+                	}else{
+               	%>
+               		<tr>
+                    	<td style="color: red">Categories Not Found!!!!</td>
+               		</tr>
+               		<%
+               		}
+               		%>
             </tbody>
         </table>
     </div>

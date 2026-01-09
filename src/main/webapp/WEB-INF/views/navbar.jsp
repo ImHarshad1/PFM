@@ -94,9 +94,9 @@
         </a>
 
         <div class="navbar-menu">
-            <a href="#transactions">Transactions</a>
-            <a href="#addtransaction">Add Transaction</a>
-            <a href="#budget">Budget</a>
+            <a href="/transactions">Transactions</a>
+            <a href="/addtransaction">Add Transaction</a>
+            <a href="/budget">Budget</a>
             <a href="category">Category</a>
             <a href="report">Report</a>
         </div>
