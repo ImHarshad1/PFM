@@ -26,12 +26,6 @@ build/
 # ===============================
 # Sensitive Configuration Files
 # ===============================
-
-# Ignore application config with secrets
-application.properties
-application.yml
-src/main/resources/application.properties
-
 # Environment variables
 .env
 
