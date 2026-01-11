@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.pfm.dto.RegisterDTO;
 import com.pfm.entity.User;
 import com.pfm.repo.UserRepo;
+import com.pfm.service.EmailService;
 
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -24,6 +26,8 @@ public class AuthController {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private EmailService emailService;
 
 	@GetMapping("/register")
 	public String registerPage(Model model) {
@@ -38,7 +42,7 @@ public class AuthController {
 	}
 
 	@PostMapping("/register")
-	public String registerUser(RegisterDTO register, Model model) {
+	public String registerUser(RegisterDTO register, Model model) throws MessagingException {
 		
 		Optional<User> opt = userRepo.findByEmail(register.getEmail());
 		
@@ -54,6 +58,8 @@ public class AuthController {
 			userRepo.save(user);
 
 			model.addAttribute("success", "Registered Successfully");
+			emailService.sendMailWithTemplate(register.getEmail(), "Welcome to application", register.getName());
+			
 			return "login";
 		}
 	}
