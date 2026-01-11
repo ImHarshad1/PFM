@@ -13,19 +13,10 @@
         min-height: 100vh;
     }
 
-	.page-container {
-	    max-width: 1200px;
-	    margin: 0px auto;
-	    padding: 40px;
-	    background: transparent;   
-	    border-radius: 0;          
-	    box-shadow: none;         
-	}
-
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to   { opacity: 1; transform: translateY(0); }
+    .page-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px;
     }
 
     .content-grid {
@@ -34,99 +25,147 @@
         gap: 30px;
     }
 
-	.filters-card {
-	    background: #ffffff;
-	    padding: 26px 22px;
-	    border-radius: 18px;
-	    box-shadow: 0 15px 35px rgba(0,0,0,0.12);
-	}
+/* 	filter card */
+    .filters-card {
+        background: #ffffff;
+        padding: 26px 22px;
+        border-radius: 18px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+    }
 
-	.filters-card h3 {
-	    text-align: center;
-	    color: #2563eb;
-	    margin-bottom: 22px;
-		margin-top:auto;
-	    font-size: 25px;
-	    font-weight: 700;
-	}
+    .filters-card h3 {
+        text-align: center;
+        color: #1e293b;
+        margin-bottom: 22px;
+        margin-top: 0px;
+        font-size: 25px;
+        font-weight: 700;
+    }
 
-	/* GROUP */
-	.filter-group {
-	    margin-bottom: 18px;
-	}
+    .field-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #64748b;
+        margin-bottom: 6px;
+    }
 
-	.filter-group label {
-	    display: block;
-	    font-weight: 600;
-	    margin-bottom: 6px;
-	    color: #334155;
-	    font-size: 13px;
+    .field-label i {
+        color: #3b82f6;
+        font-size: 13px;
+    }
+
+    .filter-group {
+        margin-bottom: 18px;
+    }
+
+    .filter-group input,
+    .filter-group select {
+        width: 100%;
+        height: 44px;
+        padding: 0 14px;
+        border-radius: 10px;
+        border: 1px solid #e2e8f0;
+        font-size: 14px;
+        color: #334155;
+        background: #ffffff;
+        box-sizing: border-box;
+    }
+
+    .filter-group input:focus,
+    .filter-group select:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 2px rgba(37,99,235,0.15);
+        outline: none;
+    }
+
+    /* select arrow */
+    .filter-group select {
+        appearance: none;
+        background-image:
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 5.5l6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        padding-right: 40px;
+    }
+
+    /* TYPE BUTTONS */
+    .type-buttons {
+        display: flex;
+        gap: 12px;
+    }
+
+    .type-btn {
+        flex: 1;
+        height: 42px;
+        border-radius: 10px;
+        border: none;
+        font-weight: 600;
+        font-size: 13px;
+        cursor: pointer;
+        background: #e0e7ff;
+        color: #1e3a8a;
+    }
+
+    .type-btn:hover {
+        background: #c7d2fe;
+    }
+
+    .apply-btn {
+        width: 100%;
+        height: 46px;
+        margin-top: 14px;
+        border-radius: 12px;
+        border: none;
+        background: linear-gradient(135deg, #2563eb, #1e3a8a);
+        color: #fff;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    
+    .apply-btn:hover {
+	    background: linear-gradient(135deg, #2563eb, #0d6efd);
+
 	}
-	.filter-group select,
-	.filter-group input {
+    
+    /* Clear Filters Button */
+	.clear-btn {
 	    width: 100%;
 	    height: 44px;
-	    padding: 0 14px;
-	    border-radius: 10px;
-	    border: 1px solid #e2e8f0;
-	    font-size: 14px;
-	    background: #ffffff;
-	    box-sizing: border-box;
-	}
-
-	.filter-group input:focus,
-	.filter-group select:focus {
-	    border-color: #2563eb;
-	    box-shadow: 0 0 0 2px rgba(37,99,235,0.15);
-	    outline: none;
-	}
-
-	.type-buttons {
-	    display: flex;
-	    gap: 12px;
-	}
-
-	.type-btn {
-	    flex: 1;
-	    height: 42px;
-	    border-radius: 10px;
-	    border: none;
-	    font-weight: 600;
-	    font-size: 13px;
-	    cursor: pointer;
-	    background: #e0e7ff;
-	    color: #1e3a8a;
-	}
-
-	.type-btn:hover {
-	    background: #c7d2fe;
-	}
-
-	.apply-btn {
-	    width: 100%;
-	    height: 46px;
-	    margin-top: 14px;
+	    margin-top: 10px;
 	    border-radius: 12px;
-	    border: none;
-	    background: linear-gradient(135deg, #2563eb, #1e3a8a);
-	    color: #fff;
-	    font-weight: 600;
+	    border: 1px solid #c7d2fe;
+	    background: #ffffff;
+	    color: #1e3a8a;
 	    font-size: 14px;
+	    font-weight: 600;
 	    cursor: pointer;
+	    transition: all 0.2s ease;
 	}
 
+	.clear-btn:hover {
+	    background: #eef2ff;
+	}
+    
+
+    /* TABLE */
     .table-card {
         background: #ffffff;
         padding: 24px;
         border-radius: 18px;
         box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+        max-width: 850px;
+    	width: 100%;
     }
 
     .table-title {
         text-align: center;
-        font-size: 20px;
+        font-size: 26px;
         font-weight: 700;
-        color: #2563eb;
+        color: #1e293b;
         margin-bottom: 18px;
     }
 
@@ -135,6 +174,7 @@
         border-collapse: collapse;
         border-radius: 14px;
         overflow: hidden;
+        font-size: 14px;
     }
 
     thead {
@@ -165,21 +205,6 @@
         font-weight: 600;
         padding: 20px;
     }
-	
-	.filter-group select {
-	    appearance: none;
-	    -webkit-appearance: none;
-	    -moz-appearance: none;
-
-	    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='%2364738b' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 5.5l6 6 6-6'/%3E%3C/svg%3E");
-	    background-repeat: no-repeat;
-	    background-position: right 14px center;
-	    background-size: 14px;
-
-	    padding-right: 42px; 
-	}
-
-
 </style>
 </head>
 
@@ -187,55 +212,75 @@
 
 <jsp:include page="navbar.jsp" />
 
-<div class="page-container">
+<%
+java.util.List<com.pfm.entity.Category> ctgs =
+    (java.util.List<com.pfm.entity.Category>) request.getAttribute("categories");
+%>
 
+<div class="page-container">
     <div class="content-grid">
 
-		<form class="filters-card" action="filterTransactions" method="get">
+        <!-- FILTERS -->
+        <form class="filters-card" action="filterTransactions" method="get">
 
-		    <h3>Filters</h3>
+            <h3>Filters</h3>
 
-		    <div class="filter-group">
-		        <label>Type</label>
-		        <div class="type-buttons">
-		            <button type="submit" name="type" value="INCOME" class="type-btn">INCOME</button>
-		            <button type="submit" name="type" value="EXPENSE" class="type-btn">EXPENSE</button>
-		        </div>
-		    </div>
+            <div class="filter-group">
+                <div class="field-label">
+                    <i class="fa-solid fa-list"></i>
+                    <span>Type</span>
+                </div>
+                <div class="type-buttons">
+                    <button type="submit" name="type" value="INCOME" class="type-btn">INCOME</button>
+                    <button type="submit" name="type" value="EXPENSE" class="type-btn">EXPENSE</button>
+                </div>
+            </div>
 
-		    <div class="filter-group">
-		        <label>Category</label>
-		        <select name="categoryId">
-		            <option value="">Select Category</option>
-		            <option value="1">Food</option>
-		            <option value="2">Rent</option>
-		            <option value="3">Shopping</option>
-		            <option value="4">Movie</option>
-		            <option value="5">Salary</option>
-		            <option value="6">Travel</option>
-		            <option value="7">EMI</option>
-		            <option value="8">Mobile Recharge</option>
-		            <option value="9">Bills</option>
-		            <option value="10">Other Expense</option>
-		            <option value="11">Other Income</option>
-		        </select>
-		    </div>
+            <div class="filter-group">
+                <div class="field-label">
+                    <i class="fa-solid fa-tags"></i>
+                    <span>Category</span>
+                </div>
+                <select name="catId" required>
+                    <option value="">Select Category</option>
+                    <%
+                    if (ctgs != null && !ctgs.isEmpty()) {
+                        for (com.pfm.entity.Category c : ctgs) {
+                    %>
+                        <option value="<%=c.getId()%>"><%=c.getName()%></option>
+                    <%
+                        }
+                    } else {
+                    %>
+                        <option disabled>No Categories Found</option>
+                    <%
+                    }
+                    %>
+                </select>
+            </div>
 
-		    <div class="filter-group">
-		        <label>From Date</label>
-		        <input type="date" name="fromDate">
-		    </div>
+            <div class="filter-group">
+                <div class="field-label">
+                    <i class="fa-solid fa-calendar"></i>
+                    <span>From Date</span>
+                </div>
+                <input type="date" name="fromDate">
+            </div>
 
-		    <div class="filter-group">
-		        <label>To Date</label>
-		        <input type="date" name="toDate">
-		    </div>
+            <div class="filter-group">
+                <div class="field-label">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>To Date</span>
+                </div>
+                <input type="date" name="toDate">
+            </div>
 
-		    <button class="apply-btn">Apply Filters</button>
-		</form>
+            <button class="apply-btn">Apply Filters</button>
+            <button type="button" class="clear-btn" onclick="clearFilters()">Clear Filters</button>
+            
+        </form>
 
-
-        <!-- RIGHT TABLE -->
+        <!-- TABLE -->
         <div class="table-card">
             <div class="table-title">Monthly Transactions</div>
 
@@ -259,7 +304,6 @@
         </div>
 
     </div>
-
 </div>
 
 </body>

@@ -13,55 +13,54 @@
         min-height: 100vh;
     }
 
-	.page-container {
-	    max-width: 1200px;
-	    margin: 40px auto;
-	    padding: 0;
-	    background: transparent;   
-	    border-radius: 0;
-	    box-shadow: none;
-	}
-
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(15px); }
-        to   { opacity: 1; transform: translateY(0); }
+    .page-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0;
+        background: transparent;
     }
 
-	.page-title {
-	    text-align: center;
-	    font-size: 28px;
-	    font-weight: 700;
-	    color: #1e293b;
-	    margin-bottom: 6px;
-	}
+    .page-title {
+        text-align: center;
+        font-size: 26px;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 6px;
+    }
 
-	.page-subtitle {
-	    text-align: center;
-	    color: #64748b;
-	    margin-bottom: 32px;
-	    font-size: 14px;
-	}
+    .page-subtitle {
+        text-align: center;
+        color: #64748b;
+        margin-bottom: 32px;
+        font-size: 14px;
+    }
 
-	.transaction-card {
-	    max-width: 520px;
-	    margin: 0px auto;
-	    padding: 42px 38px 46px;
-	    background: #ffffff;
-	    border-radius: 20px;
-	    box-shadow: 0 25px 55px rgba(0,0,0,0.14);
-	}
-
+    .transaction-card {
+        max-width: 520px;
+        margin: 0 auto;
+        padding: 42px 38px 46px;
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 25px 55px rgba(0,0,0,0.14);
+    }
 
     .form-group {
         margin-bottom: 20px;
     }
 
-    .form-group label {
-        display: block;
+    .field-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
         font-weight: 600;
+        color: #64748b;
         margin-bottom: 6px;
-        color: #334155;
+    }
+
+    .field-label i {
+        color: #3b82f6;
+        font-size: 13px;
     }
 
     .form-group input,
@@ -72,16 +71,15 @@
         border-radius: 10px;
         border: 1px solid #e2e8f0;
         font-size: 14px;
+        color: #334155;
         background-color: #ffffff;
         box-sizing: border-box;
     }
 
     .form-group select {
         appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
         background-image:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 5.5l6 6 6-6'/%3E%3C/svg%3E");
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 5.5l6 6 6-6'/%3E%3C/svg%3E");
         background-repeat: no-repeat;
         background-position: right 14px center;
         background-size: 14px;
@@ -90,8 +88,8 @@
 
     .form-group input:focus,
     .form-group select:focus {
-        border-color: #0d6efd;
-        box-shadow: 0 0 0 2px rgba(13,110,253,0.15);
+        border-color: #2563eb;
+        box-shadow: 0 0 0 2px rgba(37,99,235,0.15);
         outline: none;
     }
 
@@ -122,28 +120,40 @@ java.util.List<com.pfm.entity.Category> ctgs =
 <div class="page-container">
 
     <div class="transaction-card">
-		<div class="page-title">Add Transaction</div>
-		<div class="page-subtitle">Add a new transaction to track your spending</div>
+        <div class="page-title">Add Transaction</div>
+        <div class="page-subtitle">Add a new transaction to track your spending</div>
 
         <form action="addtransaction" method="post">
 
             <div class="form-group">
-                <label>Amount</label>
-                <input type="number" name="amount" required>
+                <div class="field-label">
+                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                    <span>Amount</span>
+                </div>
+                <input type="number" name="amount" placeholder="Enter amount" required>
             </div>
 
             <div class="form-group">
-                <label>Description</label>
-                <input type="text" name="description">
+                <div class="field-label">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <span>Description</span>
+                </div>
+                <input type="text" name="description" placeholder="Enter Description" >
             </div>
 
             <div class="form-group">
-                <label>Date</label>
+                <div class="field-label">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Date</span>
+                </div>
                 <input type="date" name="date" required>
             </div>
 
             <div class="form-group">
-                <label>Category</label>
+                <div class="field-label">
+                    <i class="fa-solid fa-tags"></i>
+                    <span>Category</span>
+                </div>
                 <select name="catId" required>
                     <option value="">Select Category</option>
                     <%
