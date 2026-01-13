@@ -26,6 +26,9 @@ build/
 # ===============================
 # Sensitive Configuration Files
 # ===============================
+src/main/resources/application.properties
+src/main/resources/category.sql
+
 # Environment variables
 .env
 
