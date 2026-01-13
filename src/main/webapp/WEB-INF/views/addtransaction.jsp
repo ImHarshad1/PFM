@@ -122,7 +122,7 @@ java.util.List<com.pfm.entity.Category> ctgs =
     <div class="transaction-card">
         <div class="page-title">Add Transaction</div>
         <div class="page-subtitle">Add a new transaction to track your spending</div>
-
+		<p style="color : green">${msg}</p>
         <form action="addtransaction" method="post">
 
             <div class="form-group">

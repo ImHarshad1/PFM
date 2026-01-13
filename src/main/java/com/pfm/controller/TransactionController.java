@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pfm.dto.TransactionDTO;
 import com.pfm.entity.Category;
@@ -25,12 +26,14 @@ public class TransactionController {
 
 	@Autowired
 	private UserRepo userRepo;
-	
+
 	@Autowired
 	private TransactionRepo transactionRepo;
 
 	@GetMapping("/addtransaction")
-	public String addtransaction(Model model) {
+	public String addtransaction(Model model, @RequestParam(required = false) String msg) {
+		if (msg != null)
+			model.addAttribute("msg", msg);
 		model.addAttribute("txn", new TransactionDTO());
 		List<Category> categories = categoryRepo.findAll();
 		model.addAttribute("categories", categories);
@@ -57,11 +60,14 @@ public class TransactionController {
 		transaction.setUser(user);
 		transactionRepo.save(transaction);
 
-		return "redirect:/addtransaction";
+		return "redirect:/addtransaction?msg=Transaction Added";
 	}
 
 	@GetMapping("/transactions")
-	public String transactionPage() {
+	public String transactionPage(Principal principal,Model model) {
+		String email = principal.getName();
+		User user = userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+		
 		return "transactions";
 	}
 }

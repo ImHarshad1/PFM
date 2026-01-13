@@ -1,7 +1,5 @@
 package com.pfm.dto;
 
-import com.pfm.entity.Category;
-
 import lombok.Data;
 
 @Data

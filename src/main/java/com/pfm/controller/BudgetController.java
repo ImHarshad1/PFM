@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pfm.dto.BudgetDTO;
 import com.pfm.entity.Budget;
@@ -31,14 +32,23 @@ public class BudgetController {
 	private UserRepo userRepo;
 	
 	@GetMapping("/budget")
-	public String addBudget(Model model) {
+	public String addBudget(Model model,Principal principal,@RequestParam(required = false)String successMsg) {
 		model.addAttribute("bdg", new BudgetDTO());
 		List<Category> categories = categoryRepo.findAll();
 		model.addAttribute("categories", categories);
 		
+		if (successMsg!=null) {
+			model.addAttribute("successMsg", successMsg);
+		}
+		
 		// add budgets list 
-		List<Budget> budgets = budgetRepo.findAll();
-	    model.addAttribute("budgets", budgets);
+		// findBudgets By User
+		String email = principal.getName();
+		User user = userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+		
+		List<Budget> budgets = budgetRepo.findByUserId(user.getId());
+		
+		model.addAttribute("budgets", budgets);
 	    
 		return "budget";
 	}
@@ -59,10 +69,7 @@ public class BudgetController {
 		budget.setUser(user);
 		
 		budgetRepo.save(budget);
-		model.addAttribute("successMsg", "Budget saved successfully!");
-		model.addAttribute("categories", categoryRepo.findAll());
-	    model.addAttribute("budgets", budgetRepo.findAll());
 		
-		return "budget";
+		return "redirect:/budget?successMsg=Budget saved successfully!";
 	}
 }
