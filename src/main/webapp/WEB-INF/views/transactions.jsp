@@ -2,220 +2,209 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Your Transactions</title>
-
-<!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
-<!-- Font Awesome -->
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<meta charset="UTF-8">
+<title>Transactions</title>
 
 <style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        background: linear-gradient(180deg, #eef2f7, #f8fafc);
+        min-height: 100vh;
+    }
 
-:root {
-    --primary: #007BFF;
-    --primary-hover: #0056B3;
-    --bg-light: #F4F6F8;
-    --card-bg: #FFFFFF;
-    --text-primary: #333333;
-    --text-secondary: #555555;
-    --border-light: #E0E4E8;
-    --error: #DC3545;
-}
+    .page-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px;
+    }
 
-* {
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
-}
+    .content-grid {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 30px;
+    }
 
-body {
-    background: var(--bg-light);
-    min-height: 100vh;
-    padding: 40px;
-}
+/* 	filter card */
+    .filters-card {
+        background: #ffffff;
+        padding: 26px 22px;
+        border-radius: 18px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+    }
 
-.transactions-container {
-    display: flex;
-    gap: 30px;
-    max-width: 1200px;
-    margin: auto;
-}
+    .filters-card h3 {
+        text-align: center;
+        color: #1e293b;
+        margin-bottom: 22px;
+        margin-top: 0px;
+        font-size: 25px;
+        font-weight: 700;
+    }
 
-/* ===== Transactions Table Card ===== */
-.table-card {
-    flex: 1;
-    background: var(--card-bg);
-    padding: 26px;
-    border-radius: 16px;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
-}
+    .field-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #64748b;
+        margin-bottom: 6px;
+    }
 
-.table-card h2 {
-    text-align: center;
-    color: var(--primary);
-    margin-bottom: 18px;
-}
+    .field-label i {
+        color: #3b82f6;
+        font-size: 13px;
+    }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    border-radius: 10px;
-    overflow: hidden;
-}
+    .filter-group {
+        margin-bottom: 18px;
+    }
 
-table th {
-    background: rgba(0, 123, 255, 0.12);
-    color: var(--text-primary);
-    padding: 12px;
-    font-size: 14px;
-    text-align: left;
-}
+    .filter-group input,
+    .filter-group select {
+        width: 100%;
+        height: 44px;
+        padding: 0 14px;
+        border-radius: 10px;
+        border: 1px solid #e2e8f0;
+        font-size: 14px;
+        color: #334155;
+        background: #ffffff;
+        box-sizing: border-box;
+    }
 
-table td {
-    padding: 12px;
-    border-bottom: 1px solid var(--border-light);
-    font-size: 14px;
-    color: var(--text-secondary);
-}
+    .filter-group input:focus,
+    .filter-group select:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 2px rgba(37,99,235,0.15);
+        outline: none;
+    }
 
-table tr:last-child td {
-    border-bottom: none;
-}
+    /* select arrow */
+    .filter-group select {
+        appearance: none;
+        background-image:
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 5.5l6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        padding-right: 40px;
+    }
 
-.no-data {
-    text-align: center;
-    color: var(--error);
-    font-weight: 500;
-    padding: 16px;
-}
+    /* TYPE BUTTONS */
+    .type-buttons {
+        display: flex;
+        gap: 12px;
+    }
 
-.action-btn {
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    margin-right: 8px;
-    color: var(--primary);
-    font-size: 15px;
-}
+    .type-btn {
+        flex: 1;
+        height: 42px;
+        border-radius: 10px;
+        border: none;
+        font-weight: 600;
+        font-size: 13px;
+        cursor: pointer;
+        background: #e0e7ff;
+        color: #1e3a8a;
+    }
 
-.action-btn:hover {
-    color: var(--primary-hover);
-}
+    .type-btn:hover {
+        background: #c7d2fe;
+    }
 
-/* ===== Filters Card ===== */
-.filters-card {
-    width: 280px;
-    background: var(--card-bg);
-    padding: 24px;
-    border-radius: 16px;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
-}
+    .apply-btn {
+        width: 100%;
+        height: 46px;
+        margin-top: 14px;
+        border-radius: 12px;
+        border: none;
+        background: linear-gradient(135deg, #2563eb, #1e3a8a);
+        color: #fff;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    
+    .apply-btn:hover {
+	    background: linear-gradient(135deg, #2563eb, #0d6efd);
 
-.filters-card h3 {
-    text-align: center;
-    color: var(--primary);
-    margin-bottom: 20px;
-}
+	}
+    
+    /* Clear Filters Button */
+	.clear-btn {
+	    width: 100%;
+	    height: 44px;
+	    margin-top: 10px;
+	    border-radius: 12px;
+	    border: 1px solid #c7d2fe;
+	    background: #ffffff;
+	    color: #1e3a8a;
+	    font-size: 14px;
+	    font-weight: 600;
+	    cursor: pointer;
+	    transition: all 0.2s ease;
+	}
 
-.form-group {
-    margin-bottom: 16px;
-}
+	.clear-btn:hover {
+	    background: #eef2ff;
+	}
+    
 
-.form-group i {
-    color: var(--primary);
-    margin-right: 6px;
-}
+    /* TABLE */
+    .table-card {
+        background: #ffffff;
+        padding: 24px;
+        border-radius: 18px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+        max-width: 850px;
+    	width: 100%;
+    }
 
-.form-group label {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-primary);
-    margin-bottom: 6px;
-    display: block;
-}
+    .table-title {
+        text-align: center;
+        font-size: 26px;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 18px;
+    }
 
-.form-group select,
-.form-group input {
-    width: 100%;
-    padding: 11px 12px;
-    border-radius: 10px;
-    border: 1px solid var(--border-light);
-    font-size: 14px;
-    outline: none;
-    background-color: #fff;
-    transition: border-color 0.25s ease,
-                box-shadow 0.25s ease,
-                background-color 0.25s ease,
-                transform 0.15s ease;
-}
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 14px;
+        overflow: hidden;
+        font-size: 14px;
+    }
 
-.form-group select:hover,
-.form-group input:hover {
-    background-color: rgba(0, 123, 255, 0.05);
-}
+    thead {
+        background: linear-gradient(135deg, #1e3a8a, #2563eb);
+    }
 
-.form-group select:focus,
-.form-group input:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
-    transform: translateY(-1px);
-}
+    thead th {
+        color: #ffffff;
+        padding: 14px;
+        font-size: 14px;
+        text-align: center;
+    }
 
-.enhanced-select {
-    position: relative;
-}
+    tbody td {
+        padding: 14px;
+        text-align: center;
+        border-bottom: 1px solid #e2e8f0;
+        font-size: 14px;
+        color: #475569;
+    }
 
-.enhanced-select .dropdown {
-    position: absolute;
-    top: calc(100% + 6px);
-    left: 0;
-    width: 100%;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(-8px);
-    pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-    z-index: 20;
-}
+    tbody tr:nth-child(even) {
+        background: #f8fafc;
+    }
 
-.enhanced-select.open .dropdown {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-}
-
-.enhanced-select .option {
-    padding: 11px 12px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.enhanced-select .option:hover {
-    background-color: rgba(0, 123, 255, 0.12);
-    color: var(--primary);
-}
-
-.filter-btn {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: none;
-    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
-    color: #fff;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.filter-btn:hover {
-    opacity: 0.95;
-}
+    .no-data {
+        color: #dc2626;
+        font-weight: 600;
+        padding: 20px;
+    }
 </style>
 </head>
 
@@ -223,119 +212,99 @@ table tr:last-child td {
 
 <jsp:include page="navbar.jsp" />
 
-<div class="transactions-container">
+<%
+java.util.List<com.pfm.entity.Category> ctgs =
+    (java.util.List<com.pfm.entity.Category>) request.getAttribute("categories");
+%>
 
-    <!-- ===== Transactions Table ===== -->
-    <div class="table-card">
-        <h2>Your Transactions</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Category</th>
-                <th>Type</th>
-                <th>Amount</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td colspan="6" class="no-data">No Transactions Found</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+<div class="page-container">
+    <div class="content-grid">
 
-    <!-- ===== Filters ===== -->
-    <div class="filters-card">
-        <h3>Filters</h3>
+        <!-- FILTERS -->
+        <form class="filters-card" action="filterTransactions" method="get">
 
-        <form action="filterTransactions" method="get">
-            <div class="form-group">
-                <label><i class="fa-solid fa-list"></i>Type</label>
-                <select name="type">
-                    <option value="">Select type</option>
-                    <option value="INCOME">Income</option>
-                    <option value="EXPENSE">Expense</option>
+            <h3>Filters</h3>
+
+            <div class="filter-group">
+                <div class="field-label">
+                    <i class="fa-solid fa-list"></i>
+                    <span>Type</span>
+                </div>
+                <div class="type-buttons">
+                    <button type="submit" name="type" value="INCOME" class="type-btn">INCOME</button>
+                    <button type="submit" name="type" value="EXPENSE" class="type-btn">EXPENSE</button>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <div class="field-label">
+                    <i class="fa-solid fa-tags"></i>
+                    <span>Category</span>
+                </div>
+                <select name="catId" required>
+                    <option value="">Select Category</option>
+                    <%
+                    if (ctgs != null && !ctgs.isEmpty()) {
+                        for (com.pfm.entity.Category c : ctgs) {
+                    %>
+                        <option value="<%=c.getId()%>"><%=c.getName()%></option>
+                    <%
+                        }
+                    } else {
+                    %>
+                        <option disabled>No Categories Found</option>
+                    <%
+                    }
+                    %>
                 </select>
             </div>
 
-            <div class="form-group">
-                <label><i class="fa-solid fa-tags"></i>Category</label>
-                <select name="categoryId">
-                    <option value="">Select category</option>
-                    <option value="1">Food</option>
-                    <option value="2">Rent</option>
-                    <option value="3">Shopping</option>
-                    <option value="4">Movie</option>
-                    <option value="5">Salary</option>
-                    <option value="6">Travel</option>
-                    <option value="7">EMI</option>
-                    <option value="8">Mobile Recharge</option>
-                    <option value="9">Bills</option>
-                    <option value="10">Other Expense</option>
-                    <option value="11">Other Income</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label><i class="fa-solid fa-calendar-day"></i>From Date</label>
+            <div class="filter-group">
+                <div class="field-label">
+                    <i class="fa-solid fa-calendar"></i>
+                    <span>From Date</span>
+                </div>
                 <input type="date" name="fromDate">
             </div>
 
-            <div class="form-group">
-                <label><i class="fa-solid fa-calendar-day"></i>To Date</label>
+            <div class="filter-group">
+                <div class="field-label">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>To Date</span>
+                </div>
                 <input type="date" name="toDate">
             </div>
 
-            <button class="filter-btn">Apply Filters</button>
+            <button class="apply-btn">Apply Filters</button>
+            <button type="button" class="clear-btn" onclick="clearFilters()">Clear Filters</button>
+            
         </form>
+
+        <!-- TABLE -->
+        <div class="table-card">
+            <div class="table-title">Monthly Transactions</div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="6" class="no-data">No Transactions Found</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
-
 </div>
-
-<!-- ===== JS ===== -->
-<script>
-document.querySelectorAll('.form-group select').forEach(select => {
-
-    const wrapper = document.createElement('div');
-    wrapper.className = 'enhanced-select';
-
-    const dropdown = document.createElement('div');
-    dropdown.className = 'dropdown';
-
-    [...select.options].forEach(opt => {
-        if (!opt.value) return;
-
-        const div = document.createElement('div');
-        div.className = 'option';
-        div.textContent = opt.textContent;
-
-        div.addEventListener('click', () => {
-            select.value = opt.value;
-            wrapper.classList.remove('open');
-        });
-
-        dropdown.appendChild(div);
-    });
-
-    select.parentNode.insertBefore(wrapper, select);
-    wrapper.appendChild(select);
-    wrapper.appendChild(dropdown);
-
-    select.addEventListener('mousedown', e => {
-        e.preventDefault();
-        wrapper.classList.toggle('open');
-    });
-
-    document.addEventListener('click', e => {
-        if (!wrapper.contains(e.target)) {
-            wrapper.classList.remove('open');
-        }
-    });
-});
-</script>
 
 </body>
 </html>

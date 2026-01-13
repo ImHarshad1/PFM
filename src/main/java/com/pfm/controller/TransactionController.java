@@ -14,6 +14,7 @@ import com.pfm.entity.Category;
 import com.pfm.entity.Transaction;
 import com.pfm.entity.User;
 import com.pfm.repo.CategoryRepo;
+import com.pfm.repo.TransactionRepo;
 import com.pfm.repo.UserRepo;
 
 @Controller
@@ -24,6 +25,9 @@ public class TransactionController {
 
 	@Autowired
 	private UserRepo userRepo;
+	
+	@Autowired
+	private TransactionRepo transactionRepo;
 
 	@GetMapping("/addtransaction")
 	public String addtransaction(Model model) {
@@ -51,6 +55,7 @@ public class TransactionController {
 		User user = userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
 
 		transaction.setUser(user);
+		transactionRepo.save(transaction);
 
 		return "redirect:/addtransaction";
 	}
