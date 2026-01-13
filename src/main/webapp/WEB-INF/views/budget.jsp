@@ -143,6 +143,34 @@
             color: var(--primary);
         }
 
+		
+		/* ===== Success Message ===== */
+		.success-msg {
+		    width: 420px;
+		    margin-bottom: 22px;
+		    padding: 14px 18px;
+		    border-radius: 14px;
+		    background: linear-gradient(
+		        135deg,
+		        rgba(0, 123, 255, 0.12),
+		        rgba(0, 123, 255, 0.05)
+		    );
+		    color: var(--primary);
+		    font-size: 14px;
+		    font-weight: 600;
+		    display: flex;
+		    align-items: center;
+		    gap: 10px;
+		    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+		    border: 1px solid rgba(0,123,255,0.25);
+		}
+
+		/* Success icon */
+		.success-msg i {
+		    font-size: 18px;
+		}
+
+		
         /* ===== Save Button ===== */
         .save-btn {
             width: 100%;
@@ -161,67 +189,110 @@
             opacity: 0.95;
         }
 
-        /* ===== Existing Budget ===== */
-        .existing-budget {
-            width: 90%;
-            max-width: 900px;
-            margin-top: 40px;
-            background: var(--card-bg);
-            padding: 22px;
-            border-radius: 14px;
-            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
-        }
+		/* ===== Existing Budget ===== */
+		.existing-budget {
+		    width: 90%;
+		    max-width: 900px;
+		    margin: 40px auto 0;
+		    background: var(--card-bg);
+		    padding: 24px;
+		    border-radius: 16px;
+		    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+		}
 
-        .existing-budget h3 {
-            font-size: 16px;
-            margin-bottom: 14px;
-            color: var(--primary);
-        }
+		.existing-budget h3 {
+		    font-size: 18px;
+		    margin-bottom: 18px;
+		    color: var(--primary);
+		    font-weight: 600;
+		}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            overflow: hidden;
-            border-radius: 10px;
-        }
+		/* ===== Table ===== */
+		.existing-budget table {
+		    width: 100%;
+		    border-collapse: separate;
+		    border-spacing: 0;
+		    border-radius: 12px;
+		    overflow: hidden;
+		}
 
-        table th {
-            background: rgba(0,123,255,0.12);
-            color: var(--text-primary);
-            padding: 12px;
-            text-align: left;
-            font-size: 14px;
-        }
+		/* Header */
+		.existing-budget th {
+		    background: rgba(0, 123, 255, 0.15);
+		    color: var(--text-primary);
+		    padding: 14px 16px;
+		    text-align: left;
+		    font-size: 14px;
+		    font-weight: 600;
+		}
 
-        table td {
-            padding: 12px;
-            border-bottom: 1px solid var(--border-light);
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
+		/* Data cells */
+		.existing-budget td {
+		    padding: 14px 16px;
+		    font-size: 14px;
+		    color: var(--text-secondary);
+		    border-bottom: 1px solid var(--border-light);
+		}
 
-        table tr:last-child td {
-            border-bottom: none;
-        }
+		/* Hover effect */
+		.existing-budget tbody tr:hover {
+		    background: rgba(0, 123, 255, 0.05);
+		}
 
-        .no-budget {
-            text-align: center;
-            color: var(--text-secondary);
-            padding: 16px;
-        }
+		/* Remove border for last row */
+		.existing-budget tr:last-child td {
+		    border-bottom: none;
+		}
+
+		/* Empty state */
+		.no-budget {
+		    text-align: center;
+		    font-size: 14px;
+		    color: var(--text-secondary);
+		    padding: 18px;
+		    font-style: italic;
+		}
+
+		/* Responsive */
+		@media (max-width: 768px) {
+		    .existing-budget {
+		        padding: 18px;
+		    }
+
+		    .existing-budget th,
+		    .existing-budget td {
+		        padding: 10px;
+		        font-size: 13px;
+		    }
+		}
+
     </style>
 </head>
 
 <body>
 
 <jsp:include page="navbar.jsp" />
+<%
+           java.util.List<com.pfm.entity.Category> ctgs =
+			(java.util.List<com.pfm.entity.Category>) request.getAttribute("categories");
+				
+			String successMsg = (String) request.getAttribute("successMsg");
+			if (successMsg != null) {
+%>
+			<div class="success-msg">
+				<i class="fa-solid fa-circle-check"></i>
+				       <span><%= successMsg %></span>
+				    </div>
+<%
+				    }
+%>
 
 <!-- ===== Add Monthly Budget ===== -->
 <div class="budget-card">
     <h2>Add Monthly Budget</h2>
     <p>Track and control your spending goals</p>
 
-    <form action="saveBudget" method="post">
+    <form action="budget" method="post">
 
         <div class="form-group">
             <label><i class="fa-solid fa-calendar"></i> Month</label>
@@ -252,23 +323,30 @@
             </select>
         </div>
 
-        <div class="form-group">
-            <label><i class="fa-solid fa-tags"></i> Category</label>
-            <select name="categoryId" required>
-                <option value="">Select Category</option>
-                <option value="1">Food</option>
-                <option value="2">Rent</option>
-                <option value="3">Shopping</option>
-                <option value="4">Movie</option>
-                <option value="5">Salary</option>
-                <option value="6">Travel</option>
-                <option value="7">EMI</option>
-                <option value="8">Mobile Recharge</option>
-                <option value="9">Bills</option>
-                <option value="10">Other Expense</option>
-                <option value="11">Other Income</option>
-            </select>
-        </div>
+		<div class="form-group">
+		            <label><i class="fa-solid fa-tags"></i>Category</label>
+		            <select name="catId" required>
+		                <option value="">Select category</option>
+		                 <%
+		                	if(!ctgs.isEmpty())
+		                	{
+		                		for(com.pfm.entity.Category cat : ctgs)
+		                		{
+		                %>
+		                	<option value="<%=cat.getId()%>"><%=cat.getName()%></option>
+		            
+		            		<%
+		                		} 
+		                	%>
+		                		</select>
+		                <%
+		                	}else{
+		               	%>
+		                    	<p style="color: red">Categories Not Found!!!!</p>
+		               	<%
+		               		}
+		               	%>
+		        </div>
 
         <div class="form-group">
             <label><i class="fa-solid fa-indian-rupee-sign"></i> Amount</label>
@@ -292,15 +370,36 @@
             <th>Amount</th>
         </tr>
         </thead>
-        <tbody>
-        <tr>
-            <td colspan="4" class="no-budget">Budgets Does Not Exists</td>
-        </tr>
-        </tbody>
+		<tbody>
+		<%
+		    java.util.List<com.pfm.entity.Budget> budgets =
+		        (java.util.List<com.pfm.entity.Budget>) request.getAttribute("budgets");
+		    if (budgets != null && !budgets.isEmpty()) {
+		        for (com.pfm.entity.Budget b : budgets) {
+		%>
+		    <tr>
+		        <td><%= b.getMonth() %></td>
+		        <td><%= b.getYear() %></td>
+		        <td><%= b.getCategory() != null ? b.getCategory().getName() : "-" %></td>
+		        <td><%= b.getAmount() %></td>
+		    </tr>
+		<%
+		        }
+		    } else {
+		%>
+		    <tr>
+		        <td colspan="4" class="no-budget">Budgets Does Not Exists</td>
+		    </tr>
+		<%
+		    }
+		%>
+		</tbody>
+
     </table>
 </div>
 
 <!-- ===== JS ===== -->
+<!--
 <script>
 document.querySelectorAll('.form-group select').forEach(select => {
 
@@ -341,6 +440,7 @@ document.querySelectorAll('.form-group select').forEach(select => {
     });
 });
 </script>
+-->
 
 </body>
 </html>
