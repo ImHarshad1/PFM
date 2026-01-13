@@ -1,0 +1,12 @@
+insert into category values(1,'Shopping','EXPENSE');
+insert into category values(2,'Movie','EXPENSE');
+insert into category values(3,'Salary','INCOME');
+insert into category values(4,'Travel','EXPENSE');
+insert into category values(5,'EMI','EXPENSE');
+insert into category values(6,'Groceries','EXPENSE');
+insert into category values(7,'Mobile Recharge','EXPENSE');
+insert into category values(8,'Rent','EXPENSE');
+insert into category values(9,'Food','EXPENSE');
+insert into category values(10,'Bills','EXPENSE');
+insert into category values(11,'Other Expense','EXPENSE');
+insert into category values(12,'Other Income','INCOME');
