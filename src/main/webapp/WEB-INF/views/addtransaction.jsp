@@ -31,8 +31,8 @@
     .page-subtitle {
         text-align: center;
         color: #64748b;
-        margin-bottom: 32px;
         font-size: 14px;
+        margin-bottom: 32px;
     }
 
     .transaction-card {
@@ -105,6 +105,79 @@
         cursor: pointer;
         margin-top: 8px;
     }
+    
+/* ===== ENHANCED SELECT (GLOBAL) ===== */
+.enhanced-select {
+    position: relative;
+    width: 100%;
+}
+
+.enhanced-select select {
+    appearance: none;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+/* Dropdown panel */
+.enhanced-select .dropdown {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    max-height: 220px;            /* ~5 options */
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 16px 32px rgba(0,0,0,0.15);
+    overflow-y: auto;
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 50;
+    overscroll-behavior: contain; /* prevents page scroll */
+}
+
+.enhanced-select.open .dropdown {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.enhanced-select .option {
+    padding: 11px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.enhanced-select .option:hover {
+    background: rgba(0,123,255,0.12);
+}
+
+/* Scrollbar */
+.enhanced-select .dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+.enhanced-select .dropdown::-webkit-scrollbar-thumb {
+    background: #c7d2fe;
+    border-radius: 10px;
+}
+
+/* FIX input/select alignment */
+.form-group > .enhanced-select {
+    width: 100%;
+}
+
+.form-group > .enhanced-select > select {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group input {
+    box-sizing: border-box;
+}
+
+
 </style>
 </head>
 
@@ -179,4 +252,94 @@ java.util.List<com.pfm.entity.Category> ctgs =
 </div>
 
 </body>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    document.querySelectorAll(".form-group select").forEach(select => {
+
+        // Prevent double enhancement
+        if (select.dataset.enhanced === "true") return;
+        select.dataset.enhanced = "true";
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "enhanced-select";
+
+        const dropdown = document.createElement("div");
+        dropdown.className = "dropdown";
+
+        // Build options
+        Array.from(select.options).forEach(option => {
+            if (!option.value) return;
+
+            const div = document.createElement("div");
+            div.className = "option";
+            div.textContent = option.textContent;
+
+            div.addEventListener("click", () => {
+                select.value = option.value;
+                select.dispatchEvent(new Event("change", { bubbles: true }));
+                wrapper.classList.remove("open");
+            });
+
+            dropdown.appendChild(div);
+        });
+
+        // Prevent page scrolling while scrolling dropdown
+        dropdown.addEventListener("wheel", e => {
+            e.stopPropagation();
+        });
+
+        // Wrap select
+        select.parentNode.insertBefore(wrapper, select);
+        wrapper.appendChild(select);
+        wrapper.appendChild(dropdown);
+
+        // Toggle dropdown
+        select.addEventListener("mousedown", e => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            // Close other dropdowns
+            document.querySelectorAll(".enhanced-select.open")
+                .forEach(el => el !== wrapper && el.classList.remove("open"));
+
+            // Auto direction (up/down)
+            dropdown.style.top = "";
+            dropdown.style.bottom = "";
+
+            const rect = wrapper.getBoundingClientRect();
+            const dropdownHeight = dropdown.scrollHeight;
+            const spaceBelow = window.innerHeight - rect.bottom;
+            const spaceAbove = rect.top;
+
+            if (spaceBelow < dropdownHeight && spaceAbove > dropdownHeight) {
+                dropdown.style.bottom = "calc(100% + 6px)";
+            } else {
+                dropdown.style.top = "calc(100% + 6px)";
+            }
+
+            wrapper.classList.toggle("open");
+        });
+
+        // Close on outside click
+        document.addEventListener("click", e => {
+            if (!wrapper.contains(e.target)) {
+                wrapper.classList.remove("open");
+            }
+        });
+
+        // Close on ESC
+        document.addEventListener("keydown", e => {
+            if (e.key === "Escape") {
+                wrapper.classList.remove("open");
+            }
+        });
+    });
+
+});
+</script>
+
+
+
 </html>

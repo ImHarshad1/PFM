@@ -17,7 +17,7 @@ public class EmailServiceImpl implements EmailService {
 	
 	public void sendMailWithTemplate(String toEmail,String subject, String username) throws MessagingException {
 		
-		        String htmlContent = """
+		    String htmlContent = """
             <!DOCTYPE html>
             <html>
             <head>

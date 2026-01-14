@@ -153,7 +153,8 @@
                 %>
                 	<tr>
                     	<td><%=cat.getName()%></td>
-                    	<td><span class="badge badge-expense"><%=cat.getType()%></span></td>
+                    	<td><span class="badge <%= cat.getType() == com.pfm.entity.TxnType.INCOME 
+                    		? "badge-income" : "badge-expense" %>"><%=cat.getType()%></span></td>
                		</tr>
                	<%
                 		}

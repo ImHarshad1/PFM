@@ -29,6 +29,7 @@
         border-radius: 18px;
         padding: 26px 22px;
         box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+		align-self: flex-start;
     }
 
     .filter-card h3 {
@@ -102,6 +103,44 @@
     .type-btn:hover {
         background: #c7d2fe;
     }
+    
+    /* Apply Filter Button */
+    .apply-btn {
+        width: 100%;
+        height: 46px;
+        margin-top: 14px;
+        border-radius: 12px;
+        border: none;
+        background: linear-gradient(135deg, #2563eb, #1e3a8a);
+        color: #fff;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    
+    .apply-btn:hover {
+	    background: linear-gradient(135deg, #2563eb, #0d6efd);
+
+	}
+    
+    /* Clear Filters Button */
+	.clear-btn {
+	    width: 100%;
+	    height: 44px;
+	    margin-top: 10px;
+	    border-radius: 12px;
+	    border: 1px solid #c7d2fe;
+	    background: #ffffff;
+	    color: #1e3a8a;
+	    font-size: 14px;
+	    font-weight: 600;
+	    cursor: pointer;
+	    transition: all 0.2s ease;
+	}
+
+	.clear-btn:hover {
+	    background: #eef2ff;
+	}
 
     /* ===== REPORT CARD ===== */
     .report-card {
@@ -110,6 +149,8 @@
         border-radius: 18px;
         padding: 24px;
         box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+        display: flex;
+    	flex-direction: column;
     }
 
     .report-card h2 {
@@ -121,6 +162,7 @@
         margin-top: 0px;
     }
 
+    /* TABLE */
     table {
         width: 100%;
         border-collapse: collapse;
@@ -128,8 +170,13 @@
         overflow: hidden;
         font-size: 14px;
     }
-
-    /* TABLE */
+    
+    .table-wrapper {
+    	flex: 1;
+    	overflow-x: auto;
+    	margin-bottom: 24px;
+	}
+    
     thead {
         background: linear-gradient(135deg, #1e3a8a, #2563eb);
     }
@@ -144,7 +191,6 @@
     tbody td {
         padding: 14px;
         text-align: center;
-        border-bottom: 1px solid #e2e8f0;
         color: #475569;
     }
 
@@ -154,13 +200,20 @@
 
     .empty-row {
         text-align: center;
-        padding: 25px;
+        padding: 25px 0;
         color: #64748b;
         font-style: italic;
     }
+    
+     .report-divider { 
+     	height: 1px;
+     	background: #e5e7eb; 
+     	margin: 16px 0 24px; /* top | sides | bottom */ 
+ 	}
+    
 
     .download-btn {
-        margin-top: 22px;
+        margin-top: auto;
         width: 100%;
         padding: 13px;
         background: linear-gradient(135deg, #2563eb, #1e3a8a);
@@ -171,6 +224,10 @@
         font-weight: 600;
         cursor: pointer;
     }
+    .download-btn:hover {
+	    background: linear-gradient(135deg, #2563eb, #0d6efd);
+
+	}
 
     @media (max-width: 900px) {
         .page-container {
@@ -188,38 +245,43 @@
 
 <jsp:include page="navbar.jsp" />
 
-<div class="page-container">
+<div class="page-container"> 
 
     <!-- FILTERS -->
     <div class="filter-card">
         <h3>Filters</h3>
 
         <div class="filter-group">
-                <div class="field-label">
-                    <i class="fa-solid fa-calendar"></i>
-                    <span>From Date</span>
-                </div>
-                <input type="date" name="fromDate">
+            <div class="field-label">
+                <i class="fa-solid fa-calendar"></i>
+                <span>From Date</span>
             </div>
+            <input type="date" name="fromDate">
+        </div>
 
-            <div class="filter-group">
-                <div class="field-label">
-                    <i class="fa-solid fa-calendar-check"></i>
-                    <span>To Date</span>
-                </div>
-                <input type="date" name="toDate">
+        <div class="filter-group">
+            <div class="field-label">
+                <i class="fa-solid fa-calendar-check"></i>
+                <span>To Date</span>
             </div>
+            <input type="date" name="toDate">
+        </div>
 
         <div class="type-buttons">
             <button class="type-btn">INCOME</button>
             <button class="type-btn">EXPENSE</button>
             <button class="type-btn">BOTH</button>
         </div>
+        <button class="apply-btn">Apply Filters</button>
+        <button type="button" class="clear-btn" onclick="clearFilters()">Clear Filters</button>
     </div>
+
+    
 
     <!-- REPORT -->
     <div class="report-card">
         <h2>Monthly Transactions</h2>
+        <div class="table-wrapper">
 
         <table>
             <thead>
@@ -239,11 +301,15 @@
                 </tr>
             </tbody>
         </table>
-
+        
+		</div>
+        <!-- Divider -->
+        <div class="report-divider"></div>
         <button class="download-btn">Download PDF</button>
     </div>
 
 </div>
 
 </body>
+
 </html>
