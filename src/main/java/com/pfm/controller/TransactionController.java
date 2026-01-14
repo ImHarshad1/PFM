@@ -18,6 +18,7 @@ import com.pfm.repo.CategoryRepo;
 import com.pfm.repo.TransactionRepo;
 import com.pfm.repo.UserRepo;
 
+
 @Controller
 public class TransactionController {
 
@@ -64,10 +65,53 @@ public class TransactionController {
 	}
 
 	@GetMapping("/transactions")
-	public String transactionPage(Principal principal,Model model) {
+	public String transactionPage(Principal principal, Model model) {
 		String email = principal.getName();
 		User user = userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
-		
+
+		List<Transaction> txns = transactionRepo.findByUserId(user.getId());
+
+		model.addAttribute("txns", txns);
+
 		return "transactions";
 	}
+
+	@GetMapping("/edit")
+	public String EditTransactionPage(@RequestParam Integer tid,Model model) {
+
+		Transaction txn = transactionRepo.findById(tid)
+				.orElseThrow(() -> new RuntimeException("Transaction not found"));
+		
+		TransactionDTO dto = new TransactionDTO();
+		dto.setId(txn.getId());
+		dto.setAmount(txn.getAmount());
+		dto.setDescription(txn.getDescription());
+		dto.setDate(txn.getDate());
+		dto.setCategory(txn.getCategory());
+		
+		model.addAttribute("dto", dto);
+		List<Category> categories = categoryRepo.findAll();
+		model.addAttribute("categories", categories);
+
+		return "edittransaction";
+	}
+	
+	@PostMapping("/edittransaction")
+	public String EditTransaction(TransactionDTO dto) {
+		
+		Transaction txn = transactionRepo.findById(dto.getId()).orElseThrow(()-> new RuntimeException("Txn not found"));
+		
+		txn.setAmount(dto.getAmount());
+		txn.setDescription(dto.getDescription());
+		txn.setDate(dto.getDate());
+		
+		Category category = categoryRepo.findById(dto.getCatId()).orElseThrow(()-> new RuntimeException("Txn not found"));
+		txn.setCategory(category);
+		txn.setType(category.getType());
+		
+		transactionRepo.save(txn);
+		return "redirect:/transactions";
+	}
+	
+
 }

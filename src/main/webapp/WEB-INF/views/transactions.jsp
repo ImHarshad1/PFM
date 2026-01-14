@@ -287,6 +287,10 @@
 <%
 java.util.List<com.pfm.entity.Category> ctgs =
     (java.util.List<com.pfm.entity.Category>) request.getAttribute("categories");
+
+ java.util.List<com.pfm.entity.Transaction> txns = 
+		 (java.util.List<com.pfm.entity.Transaction>) request.getAttribute("txns");
+
 %>
 
 <div class="page-container">
@@ -368,9 +372,33 @@ java.util.List<com.pfm.entity.Category> ctgs =
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td colspan="6" class="no-data">No Transactions Found</td>
-                    </tr>
+                    <%
+                    	if(txns!=null && !txns.isEmpty())
+                    	{
+                    		for(com.pfm.entity.Transaction txn : txns)
+                    		{
+                    %>		
+                    			 <tr>
+                        				<td><%=txn.getDate() %></td>
+                        				<td><%=txn.getDescription()%></td>
+                        				<td><%=txn.getCategory().getName()%></td>
+                        				<td><%=txn.getType()%></td>
+                        				<td><%=txn.getAmount()%></td>
+                        				<td>
+                        					<a href="/edit?tid=<%= txn.getId()%>">Edit</a>
+                        					<a href="/delete?tid=<%= txn.getId()%>">Delete</a>
+                        				</td>
+                    			</tr>
+                    <%
+                    		}
+                    	}else{
+                    %>
+                   				<tr>
+                        				<td colspan="6" class="no-data">No Transactions Found</td>
+                    			</tr>
+                    <%
+                    	}
+                    %>
                 </tbody>
             </table>
         </div>
