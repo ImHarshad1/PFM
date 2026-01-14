@@ -1,11 +1,15 @@
 package com.pfm.serviceimpl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.pfm.service.EmailService;
+import com.pfm.service.util.HtmlEmailUtil;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -14,6 +18,8 @@ public class EmailServiceImpl implements EmailService {
 	@Autowired
 	private JavaMailSender javaMailSender;
 
+	@Autowired
+	private HtmlEmailUtil htmlEmailUtil;
 	
 	public void sendMailWithTemplate(String toEmail,String subject, String username) throws MessagingException {
 		
@@ -55,4 +61,54 @@ public class EmailServiceImpl implements EmailService {
         javaMailSender.send(message);
         System.out.println("Email sent successfully to " + toEmail);
     }
+
+
+	@Override
+	public void sendOtpEmail(String toEmail, String otp) {
+		try {
+		    String html = htmlEmailUtil.getHtmlContent("otp-email.html");
+
+		    Map<String, String> values = new HashMap<>();
+		    values.put("otp", otp);
+		    html = htmlEmailUtil.replacePlaceholders(html, values);
+
+		    MimeMessage message = javaMailSender.createMimeMessage();
+		    MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+		    helper.setTo(toEmail);
+		    helper.setSubject("Password Reset OTP");
+		    helper.setText(html, true);
+
+		    javaMailSender.send(message);
+
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		
+	}
+
+
+	@Override
+	public void sendPasswordResetSuccessEmail(String toEmail, String name) {
+		try {
+		    String html = htmlEmailUtil.getHtmlContent("password-reset-success.html");
+
+		    Map<String, String> values = new HashMap<>();
+		    values.put("name", name);
+		    html = htmlEmailUtil.replacePlaceholders(html, values);
+
+		    MimeMessage message = javaMailSender.createMimeMessage();
+		    MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+		    helper.setTo(toEmail);
+		    helper.setSubject("Password Updated Successfully");
+		    helper.setText(html, true);
+
+		    javaMailSender.send(message);
+
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		
+	}
 }

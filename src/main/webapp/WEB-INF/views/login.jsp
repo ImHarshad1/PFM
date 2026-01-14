@@ -284,6 +284,10 @@
                 <a href="register" class="register-link">
                     Don't have an account? Register Now
                 </a>
+				
+				<a href="forgot-password" class="register-link">
+								    Forgot Password?
+								</a>
             </form>
         </div>
     </div>
